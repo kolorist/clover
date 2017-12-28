@@ -1,0 +1,5 @@
+#ifndef __CLOVER_VSOUTPUT_SINK_H__
+#define __CLOVER_VSOUTPUT_SINK_H__
+
+
+#endif // __CLOVER_VSOUTPUT_SINK_H__
