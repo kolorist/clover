@@ -3,13 +3,15 @@
 
 #include <floral.h>
 
+#include <commons.h>
+
 namespace clover {
 	void										Initialize();
 
 	template <class ... Args>
-	void LogPrintln(const_cstr fmt, Args ... args);
+	void LogPrintln(LogLevel logLevel, const_cstr fmt, Args ... args);
 
-	void										LogPrintStr(const_cstr str);
+	void										LogPrintStr(LogLevel logLevel, const_cstr str);
 }
 
 #include "Logger.hpp"

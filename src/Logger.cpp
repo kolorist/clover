@@ -1,10 +1,10 @@
 #include "Logger.h"
 
-#include <Windows.h>
+#include <VSOutputSink.h>
 
 namespace clover {
-	void LogPrintStr(const_cstr str)
+	void LogPrintStr(LogLevel logLevel, const_cstr str)
 	{
-		OutputDebugStringA(str);
+		VSOutputSinkDrainer::DrainLog(logLevel, str);
 	}
 }
