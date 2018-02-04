@@ -6,10 +6,11 @@
 #include <commons.h>
 
 namespace clover {
+
 	void										Initialize();
 
 	template <class ... Args>
-	void LogPrintln(LogLevel logLevel, const_cstr fmt, Args ... args);
+	void										LogPrintln(LogLevel logLevel, const_cstr fmt, Args ... args);
 
 	void										LogPrintStr(LogLevel logLevel, const_cstr str);
 }

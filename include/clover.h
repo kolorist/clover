@@ -6,4 +6,6 @@
 #include <SinkTopic.h>
 #include <VSOutputSink.h>
 
+#include <Tracer.h>
+
 #endif // __CLOVER_H__

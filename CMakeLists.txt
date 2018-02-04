@@ -14,7 +14,8 @@ add_definitions (-D_CRT_SECURE_NO_WARNINGS
 add_library(clover ${file_list})
 
 target_link_libraries (clover
-	floral)
+	floral
+	helich)
 
 target_include_directories (clover PUBLIC
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)

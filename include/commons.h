@@ -2,8 +2,15 @@
 #define __CLOVER_COMMONS_H__
 
 #include <floral.h>
+#include <helich.h>
 
 namespace clover {
+
+	// memory
+	typedef helich::Allocator<helich::StackScheme, helich::NoTrackingPolicy>	LinearAllocator;
+	// user-defined later
+	extern LinearAllocator						g_LinearAllocator;
+
 	enum class LogLevel {
 		Disable = 0,
 		Error = 1,
