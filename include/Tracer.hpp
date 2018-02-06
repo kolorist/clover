@@ -1,3 +1,5 @@
+#include <intrin.h>
+
 namespace clover {
 	template <class ... Args>
 	void TracePrint(const_cstr fmt, Args... args)
@@ -8,7 +10,7 @@ namespace clover {
 
 		sprintf(record.pm_Content, fmt, args...);
 
-		record.pm_TimeStamp = 0;
+		record.pm_TimeStamp = __rdtsc();
 		bundle.pm_NextLogEntryIdx = (bundle.pm_NextLogEntryIdx + 1) % MAX_RECORDS_PER_THREAD;
 	}
 }

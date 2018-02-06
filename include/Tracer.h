@@ -22,6 +22,8 @@ namespace clover {
 	struct RecordsBundle {
 		Record									pm_Records[MAX_RECORDS_PER_THREAD];
 		u32										pm_NextLogEntryIdx;
+		u32										pm_ThreadId;
+		c8										pm_Name[256];
 	};
 
 	struct RecordsKeeper {
@@ -38,6 +40,8 @@ namespace clover {
 
 	template <class ... Args>
 	void										TracePrint(const_cstr fmt, Args... args);
+
+	void										PrintAllTraces();
 }
 
 #include "Tracer.hpp"
