@@ -17,4 +17,9 @@ namespace clover {
 
 #include "Logger.hpp"
 
+#define CLOVER_VERBOSE(FMT, ...)				clover::LogPrintln(clover::LogLevel::Verbose, FMT, __VA_ARGS__)
+#define CLOVER_DEBUG(FMT, ...)					clover::LogPrintln(clover::LogLevel::Debug, FMT, __VA_ARGS__)
+#define CLOVER_INFO(FMT, ...)					clover::LogPrintln(clover::LogLevel::Info, FMT, __VA_ARGS__)
+#define CLOVER_ERROR(FMT, ...)					clover::LogPrintln(clover::LogLevel::Error, FMT, __VA_ARGS__)
+
 #endif // __CLOVER_LOGGER_H__
