@@ -29,7 +29,7 @@ namespace clover {
 			g_RecordsKeeper.pm_BundlesCount++;
 
 			g_RecordsKeeper.pm_Bundles[g_RecorderInfo.pm_BundleIdx] =
-				g_LinearAllocator.Allocate<RecordsBundle>();
+				g_LinearAllocator.allocate<RecordsBundle>();
 		}
 
 		g_RecordsKeeper.pm_Bundles[g_RecorderInfo.pm_BundleIdx]->pm_NextLogEntryIdx = 0;

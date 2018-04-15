@@ -7,7 +7,7 @@
 namespace clover {
 
 	// memory
-	typedef helich::Allocator<helich::StackScheme, helich::NoTrackingPolicy>	LinearAllocator;
+	typedef helich::allocator<helich::stack_scheme, helich::no_tracking_policy>	LinearAllocator;
 	// user-defined later
 	extern LinearAllocator						g_LinearAllocator;
 
