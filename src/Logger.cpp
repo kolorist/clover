@@ -1,6 +1,10 @@
 #include "Logger.h"
 
-#include <VSOutputSink.h>
+#if defined(PLATFORM_WINDOWS)
+#	include <VSOutputSink.h>
+#else
+#	include <ADBOutputSink.h>
+#endif
 
 namespace clover {
 
@@ -21,8 +25,17 @@ namespace clover {
 	{
 	}
 
+	void LogPrintln(LogLevel i_logLevel, const_cstr i_str)
+	{
+		LogPrintStr(i_logLevel, i_str);
+	}
+
 	void LogPrintStr(LogLevel logLevel, const_cstr str)
 	{
+#if defined(PLATFORM_WINDOWS)
 		VSOutputSinkDrainer::DrainLog(logLevel, str);
+#else
+		ADBOutputSinkDrainer::DrainLog(logLevel, str);
+#endif
 	}
 }

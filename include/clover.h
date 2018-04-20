@@ -4,8 +4,11 @@
 #include "Logger.h"
 #include "Sink.h"
 #include "SinkTopic.h"
-#include "VSOutputSink.h"
-
-#include "Tracer.h"
+#if defined(PLATFORM_WINDOWS)
+#	include "VSOutputSink.h"
+#	include "Tracer.h"
+#else
+#	include "ADBOutputSink.h"
+#endif
 
 #endif // __CLOVER_H__

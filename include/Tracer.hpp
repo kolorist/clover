@@ -1,4 +1,7 @@
+#if defined(PLATFORM_WINDOWS)
 #include <intrin.h>
+#else
+#endif
 
 namespace clover {
 	template <class ... Args>
@@ -10,7 +13,10 @@ namespace clover {
 
 		sprintf(record.pm_Content, fmt, args...);
 
+#if defined(PLATFORM_WINDOWS)
 		record.pm_TimeStamp = __rdtsc();
+#else
+#endif
 		bundle.pm_NextLogEntryIdx = (bundle.pm_NextLogEntryIdx + 1) % MAX_RECORDS_PER_THREAD;
 	}
 }

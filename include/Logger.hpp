@@ -7,7 +7,9 @@ namespace clover {
 	{
 		c8 buffer[2048];
 		sprintf(buffer, fmt, args...);
+#if defined(PLATFORM_WINDOWS)
 		strcat(buffer, "\n");
+#endif
 		LogPrintStr(logLevel, buffer);
 	}
 }
