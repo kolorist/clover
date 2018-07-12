@@ -26,6 +26,7 @@ namespace clover {
 						logStr);
 			}
 			OutputDebugStringA(buffer);
+			OutputDebugStringA("\n");
 		}
 	}
 
