@@ -6,12 +6,12 @@
 namespace clover {
 	VSOutputSink								g_VSOutputSink;
 
-	static floral::mutex						s_SinkLock;
+	static floral::mutex						s_VSSinkLock;
 
 	void VSOutputSinkDrainer::DrainLog(LogLevel logLevel, const_cstr logStr)
 	{
 		if (logLevel <= g_VSOutputSink.pm_LogLevel) {
-			floral::lock_guard g(s_SinkLock);
+			floral::lock_guard g(s_VSSinkLock);
 			c8 buffer[2048];
 			if (g_VSOutputSink.pm_CurrentTopicIdx > 0) {
 				sprintf(buffer, "[%s] [/%s] [%s] %s",
@@ -32,14 +32,14 @@ namespace clover {
 
 	void VSOutputSinkDrainer::PushTopic(const_cstr topicName)
 	{
-		floral::lock_guard g(s_SinkLock);
+		floral::lock_guard g(s_VSSinkLock);
 		g_VSOutputSink.pm_SinkTopics[g_VSOutputSink.pm_CurrentTopicIdx] = topicName;
 		g_VSOutputSink.pm_CurrentTopicIdx++;
 	}
 
 	void VSOutputSinkDrainer::PopTopic()
 	{
-		floral::lock_guard g(s_SinkLock);
+		floral::lock_guard g(s_VSSinkLock);
 		g_VSOutputSink.pm_SinkTopics[g_VSOutputSink.pm_CurrentTopicIdx] = nullptr;
 		g_VSOutputSink.pm_CurrentTopicIdx--;
 	}

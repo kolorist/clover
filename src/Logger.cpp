@@ -2,6 +2,7 @@
 
 #if defined(PLATFORM_WINDOWS)
 #	include <VSOutputSink.h>
+#	include <ConsoleOutputSink.h>
 #else
 #	include <ADBOutputSink.h>
 #endif
@@ -34,6 +35,7 @@ namespace clover {
 	{
 #if defined(PLATFORM_WINDOWS)
 		VSOutputSinkDrainer::DrainLog(logLevel, str);
+		ConsoleOutputSinkDrainer::DrainLog(logLevel, str);
 #else
 		ADBOutputSinkDrainer::DrainLog(logLevel, str);
 #endif
