@@ -1,10 +1,14 @@
-#ifndef __CLOVER_SINKTOPIC_H__
-#define __CLOVER_SINKTOPIC_H__
+#pragma once
 
 #include <floral.h>
 
 #include <commons.h>
-#include <VSOutputSink.h>
+
+#if defined(PLATFORM_WINDOWS)
+#	include "VSOutputSink.h"
+#else
+#	include "ADBOutputSink.h"
+#endif
 
 namespace clover {
 	template <class TDrainer>
@@ -19,9 +23,11 @@ namespace clover {
 			TDrainer::PopTopic();
 		}
 	};
-
-#define LOG_TOPIC(STR) \
+#if defined(PLATFORM_WINDOWS)
+#	define LOG_TOPIC(STR) \
 	clover::SinkTopic<clover::VSOutputSinkDrainer> _clover_VSOutputSinkTopic(STR)
+#else
+#	define LOG_TOPIC(STR) \
+	clover::SinkTopic<clover::ADBOutputSinkDrainer> _clover_ADBOutputSinkTopic(STR)
+#endif
 }
-
-#endif // __CLOVER_SINKTOPIC_H__
