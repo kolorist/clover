@@ -1,10 +1,10 @@
-#include "Logger.h"
+#include "clover/Logger.h"
 
 #if defined(PLATFORM_WINDOWS)
-#	include <VSOutputSink.h>
-#	include <ConsoleOutputSink.h>
+#	include "clover/VSOutputSink.h"
+#	include "clover/ConsoleOutputSink.h"
 #else
-#	include <ADBOutputSink.h>
+#	include "clover/ADBOutputSink.h"
 #endif
 
 namespace clover {

@@ -1,4 +1,4 @@
-#include "VSOutputSink.h"
+#include "clover/VSOutputSink.h"
 
 #include <Windows.h>
 #include <stdio.h>
@@ -17,10 +17,10 @@ void VSOutputSinkDrainer::DrainLog(LogLevel logLevel, const_cstr logStr)
 		floral::lock_guard g(s_VSSinkLock);
 		c8 buffer[2048];
 		if (s_CurrentTopicIdx > 0) {
-			sprintf(buffer, "[%s] [/%s] [%s] %s",
+			sprintf(buffer, "[%s] [%s] [/%s] %s",
 					g_VSOutputSink.pm_Name,
-					s_SinkTopics[s_CurrentTopicIdx - 1],
 					LogLevelStr[(s32)logLevel],
+					s_SinkTopics[s_CurrentTopicIdx - 1],
 					logStr);
 		} else {
 			sprintf(buffer, "[%s] [/] [%s] %s",

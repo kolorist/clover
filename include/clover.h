@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Logger.h"
-#include "Sink.h"
-#include "SinkTopic.h"
+#include "clover/Logger.h"
+#include "clover/Sink.h"
+#include "clover/SinkTopic.h"
 #if defined(PLATFORM_WINDOWS)
-#	include "VSOutputSink.h"
-#	include "ConsoleOutputSink.h"
-#	include "Tracer.h"
+#	include "clover/VSOutputSink.h"
+#	include "clover/ConsoleOutputSink.h"
+#	include "clover/Tracer.h"
 #else
-#	include "ADBOutputSink.h"
+#	include "clover/ADBOutputSink.h"
 #endif

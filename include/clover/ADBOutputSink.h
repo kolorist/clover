@@ -2,7 +2,7 @@
 
 #include <floral.h>
 
-#include <Sink.h>
+#include "Sink.h"
 
 namespace clover {
 	struct ADBOutputSink : Sink {
