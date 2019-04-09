@@ -23,7 +23,7 @@ void VSOutputSinkDrainer::DrainLog(LogLevel logLevel, const_cstr logStr)
 					s_SinkTopics[s_CurrentTopicIdx - 1],
 					logStr);
 		} else {
-			sprintf(buffer, "[%s] [/] [%s] %s",
+			sprintf(buffer, "[%s] [%s] [/] %s",
 					g_VSOutputSink.pm_Name,
 					LogLevelStr[(s32)logLevel],
 					logStr);
