@@ -4,51 +4,63 @@
 
 namespace clover {
 
-	ConsoleOutputSink							g_ConsoleOutputSink;
+thread_local ConsoleOutputSink					s_ConsoleOutputSink;
+thread_local const_cstr							s_ConsoleSinkTopics[MAX_SINK_TOPIC_DEPTH];
+thread_local u32								s_ConsoleCurrentTopicIdx = 0;
 
-	static floral::mutex						s_ConsoleSinkLock;
+static floral::mutex							s_ConsoleSinkLock;
 
-	void ConsoleOutputSinkDrainer::DrainLog(LogLevel logLevel, const_cstr logStr)
+void ConsoleOutputSinkDrainer::DrainLog(LogLevel logLevel, const_cstr logStr)
+{
+	if (logLevel <= s_ConsoleOutputSink.pm_LogLevel)
 	{
-		if (logLevel <= g_ConsoleOutputSink.pm_LogLevel) {
+		c8 sinkStr[512];
+		sinkStr[0] = 0;
+		for (u32 i = 0; i < s_ConsoleCurrentTopicIdx; i++)
+		{
+			strcat(sinkStr, "/");
+			strcat(sinkStr, s_ConsoleSinkTopics[i]);
+		}
+
+		c8 buffer[2048];
+		if (s_ConsoleCurrentTopicIdx > 0) {
+			sprintf(buffer, "[%s] [%s] [%s] %s\n",
+					s_ConsoleOutputSink.pm_Name,
+					LogLevelStr[(s32)logLevel],
+					sinkStr,
+					logStr);
+		} else {
+			sprintf(buffer, "[%s] [/] [%s] %s\n",
+					s_ConsoleOutputSink.pm_Name,
+					LogLevelStr[(s32)logLevel],
+					logStr);
+		}
+
+		{
 			floral::lock_guard g(s_ConsoleSinkLock);
-			c8 buffer[2048];
-			if (g_ConsoleOutputSink.pm_CurrentTopicIdx > 0) {
-				sprintf(buffer, "[%s] [/%s] [%s] %s\n",
-						g_ConsoleOutputSink.pm_Name,
-						g_ConsoleOutputSink.pm_SinkTopics[g_ConsoleOutputSink.pm_CurrentTopicIdx - 1],
-						LogLevelStr[(s32)logLevel],
-						logStr);
-			} else {
-				sprintf(buffer, "[%s] [/] [%s] %s\n",
-						g_ConsoleOutputSink.pm_Name,
-						LogLevelStr[(s32)logLevel],
-						logStr);
-			}
 			printf(buffer);
 		}
 	}
+}
 
-	void ConsoleOutputSinkDrainer::PushTopic(const_cstr topicName)
-	{
-		floral::lock_guard g(s_ConsoleSinkLock);
-		g_ConsoleOutputSink.pm_SinkTopics[g_ConsoleOutputSink.pm_CurrentTopicIdx] = topicName;
-		g_ConsoleOutputSink.pm_CurrentTopicIdx++;
-	}
+void ConsoleOutputSinkDrainer::PushTopic(const_cstr topicName)
+{
+	s_ConsoleSinkTopics[s_ConsoleCurrentTopicIdx] = topicName;
+	s_ConsoleCurrentTopicIdx++;
+}
 
-	void ConsoleOutputSinkDrainer::PopTopic()
-	{
-		floral::lock_guard g(s_ConsoleSinkLock);
-		g_ConsoleOutputSink.pm_SinkTopics[g_ConsoleOutputSink.pm_CurrentTopicIdx] = nullptr;
-		g_ConsoleOutputSink.pm_CurrentTopicIdx--;
-	}
+void ConsoleOutputSinkDrainer::PopTopic()
+{
+	s_ConsoleSinkTopics[s_ConsoleCurrentTopicIdx] = nullptr;
+	s_ConsoleCurrentTopicIdx--;
+}
 
-	////////////////////////////////////////////
-	void InitializeConsoleOutput(const_cstr name, LogLevel logLevel)
-	{
-		strcpy(g_ConsoleOutputSink.pm_Name, name);
-		g_ConsoleOutputSink.pm_LogLevel = logLevel;
-		g_ConsoleOutputSink.pm_CurrentTopicIdx = 0;
-	}
-	////////////////////////////////////////////
+//----------------------------------------------
+
+void InitializeConsoleOutput(const_cstr name, LogLevel logLevel)
+{
+	strcpy(s_ConsoleOutputSink.pm_Name, name);
+	s_ConsoleOutputSink.pm_LogLevel = logLevel;
+}
+
 }

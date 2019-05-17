@@ -9,35 +9,28 @@
 
 namespace clover {
 
-	struct Initializer {
-		Initializer()
-		{
-			Initialize();
-		}
-
-		~Initializer()
-		{
-		}
-	};
-
-	static Initializer s_Initializer;
-
-	void Initialize()
-	{
-	}
-
-	void LogPrintln(LogLevel i_logLevel, const_cstr i_str)
-	{
-		LogPrintStr(i_logLevel, i_str);
-	}
-
-	void LogPrintStr(LogLevel logLevel, const_cstr str)
-	{
+void Initialize(const_cstr name, LogLevel logLevel)
+{
 #if defined(PLATFORM_WINDOWS)
-		VSOutputSinkDrainer::DrainLog(logLevel, str);
-		ConsoleOutputSinkDrainer::DrainLog(logLevel, str);
+	InitializeVSOutput(name, logLevel);
 #else
-		ADBOutputSinkDrainer::DrainLog(logLevel, str);
+	InitializeADBOutput(name, logLevel);
 #endif
-	}
+}
+
+void LogPrintln(LogLevel i_logLevel, const_cstr i_str)
+{
+	LogPrintStr(i_logLevel, i_str);
+}
+
+void LogPrintStr(LogLevel logLevel, const_cstr str)
+{
+#if defined(PLATFORM_WINDOWS)
+	VSOutputSinkDrainer::DrainLog(logLevel, str);
+	ConsoleOutputSinkDrainer::DrainLog(logLevel, str);
+#else
+	ADBOutputSinkDrainer::DrainLog(logLevel, str);
+#endif
+}
+
 }

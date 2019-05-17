@@ -4,12 +4,24 @@
 
 namespace clover {
 
-	ADBOutputSink								g_ADBOutputSink;
+thread_local ADBOutputSink						s_ADBOutputSink;
+thread_local const_cstr							s_ADBSinkTopics[MAX_SINK_TOPIC_DEPTH];
+thread_local u32								s_ADBCurrentTopicIdx = 0;
 
-	static floral::mutex						s_SinkLock;
+static floral::mutex							s_ADBSinkLock;
 
-	void ADBOutputSinkDrainer::DrainLog(LogLevel i_logLevel, const_cstr i_logStr)
+void ADBOutputSinkDrainer::DrainLog(LogLevel i_logLevel, const_cstr i_logStr)
+{
+	if (i_logLevel <= s_ADBOutputSink.pm_LogLevel)
 	{
+		c8 sinkStr[512];
+		sinkStr[0] = 0;
+		for (u32 i = 0; i < s_ADBCurrentTopicIdx; i++)
+		{
+			strcat(sinkStr, "/");
+			strcat(sinkStr, s_ADBSinkTopics[i]);
+		}
+
 		android_LogPriority logPrio = ANDROID_LOG_VERBOSE;
 		switch (i_logLevel) {
 			case LogLevel::Error:
@@ -28,40 +40,39 @@ namespace clover {
 				break;
 		};
 
-		if (i_logLevel <= g_ADBOutputSink.pm_LogLevel) {
-			floral::lock_guard g(s_SinkLock);
-			if (g_ADBOutputSink.pm_CurrentTopicIdx > 0) {
-				__android_log_print(logPrio, g_ADBOutputSink.pm_Name, "[/%s] %s",
-						g_ADBOutputSink.pm_SinkTopics[g_ADBOutputSink.pm_CurrentTopicIdx - 1],
-						i_logStr);
-			} else {
-				__android_log_print(logPrio, g_ADBOutputSink.pm_Name, "[/] %s",
-						i_logStr);
-			}
+		if (s_ADBCurrentTopicIdx > 0) {
+			__android_log_print(logPrio, "adb", "[%s] [%s] [%s] %s",
+					s_ADBOutputSink.pm_Name,
+					LogLevelStr[(s32)i_logLevel],
+					sinkStr,
+					i_logStr);
+		} else {
+			__android_log_print(logPrio, "adb", "[%s] [%s] [/] %s",
+					s_ADBOutputSink.pm_Name,
+					LogLevelStr[(s32)i_logLevel],
+					i_logStr);
 		}
 	}
+}
 
-	void ADBOutputSinkDrainer::PushTopic(const_cstr i_topicName)
-	{
-		floral::lock_guard g(s_SinkLock);
-		g_ADBOutputSink.pm_SinkTopics[g_ADBOutputSink.pm_CurrentTopicIdx] = i_topicName;
-		g_ADBOutputSink.pm_CurrentTopicIdx++;
-	}
+void ADBOutputSinkDrainer::PushTopic(const_cstr i_topicName)
+{
+	s_ADBSinkTopics[s_ADBCurrentTopicIdx] = i_topicName;
+	s_ADBCurrentTopicIdx++;
+}
 
-	void ADBOutputSinkDrainer::PopTopic()
-	{
-		floral::lock_guard g(s_SinkLock);
-		g_ADBOutputSink.pm_SinkTopics[g_ADBOutputSink.pm_CurrentTopicIdx] = nullptr;
-		g_ADBOutputSink.pm_CurrentTopicIdx--;
-	}
+void ADBOutputSinkDrainer::PopTopic()
+{
+	s_ADBSinkTopics[s_ADBCurrentTopicIdx] = nullptr;
+	s_ADBCurrentTopicIdx--;
+}
 
-	//------------------------------------------
-	void InitializeADBOutput(const_cstr i_name, LogLevel i_logLevel)
-	{
-		strcpy(g_ADBOutputSink.pm_Name, i_name);
-		g_ADBOutputSink.pm_LogLevel = i_logLevel;
-		g_ADBOutputSink.pm_CurrentTopicIdx = 0;
-	}
-	//------------------------------------------
+//----------------------------------------------
+
+void InitializeADBOutput(const_cstr i_name, LogLevel i_logLevel)
+{
+	strcpy(s_ADBOutputSink.pm_Name, i_name);
+	s_ADBOutputSink.pm_LogLevel = i_logLevel;
+}
 
 }
