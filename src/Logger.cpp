@@ -13,6 +13,7 @@ void Initialize(const_cstr name, LogLevel logLevel)
 {
 #if defined(PLATFORM_WINDOWS)
 	InitializeVSOutput(name, logLevel);
+	InitializeConsoleOutput(name, logLevel);
 #else
 	InitializeADBOutput(name, logLevel);
 #endif

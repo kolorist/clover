@@ -1,4 +1,4 @@
-#include "ConsoleOutputSink.h"
+#include "clover/ConsoleOutputSink.h"
 
 #include <stdio.h>
 
@@ -38,7 +38,7 @@ void ConsoleOutputSinkDrainer::DrainLog(LogLevel logLevel, const_cstr logStr)
 
 		{
 			floral::lock_guard g(s_ConsoleSinkLock);
-			printf(buffer);
+			printf("%s", buffer);
 		}
 	}
 }
