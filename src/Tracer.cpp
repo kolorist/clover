@@ -1,6 +1,7 @@
 #include "clover/Tracer.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <Windows.h>
 
 #include "clover/commons.h"

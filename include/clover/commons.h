@@ -14,9 +14,10 @@ namespace clover {
 	enum class LogLevel {
 		Disable = 0,
 		Error = 1,
-		Info = 2,
-		Debug = 3,
-		Verbose = 4
+		Warning = 2,
+		Info = 3,
+		Debug = 4,
+		Verbose = 5
 	};
 
 	extern const_cstr							LogLevelStr[];
