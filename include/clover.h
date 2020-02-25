@@ -3,7 +3,7 @@
 #include "clover/Logger.h"
 #include "clover/Sink.h"
 #include "clover/SinkTopic.h"
-#if defined(PLATFORM_WINDOWS)
+#if defined(FLORAL_PLATFORM_WINDOWS)
 #	include "clover/VSOutputSink.h"
 #	include "clover/ConsoleOutputSink.h"
 #	include "clover/Tracer.h"

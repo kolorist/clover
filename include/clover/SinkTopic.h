@@ -4,7 +4,7 @@
 
 #include "commons.h"
 
-#if defined(PLATFORM_WINDOWS)
+#if defined(FLORAL_PLATFORM_WINDOWS)
 #	include "VSOutputSink.h"
 #else
 #	include "ADBOutputSink.h"
@@ -25,7 +25,7 @@ struct SinkTopic {
 	}
 };
 
-#if defined(PLATFORM_WINDOWS)
+#if defined(FLORAL_PLATFORM_WINDOWS)
 #	define LOG_TOPIC(STR) \
 	clover::SinkTopic<clover::VSOutputSinkDrainer> _clover_VSOutputSinkTopic(STR)
 #else

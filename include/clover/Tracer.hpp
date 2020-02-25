@@ -1,4 +1,4 @@
-#if defined(PLATFORM_WINDOWS)
+#if defined(FLORAL_PLATFORM_WINDOWS)
 #include <intrin.h>
 #else
 #endif
@@ -13,7 +13,7 @@ namespace clover {
 
 		sprintf(record.pm_Content, fmt, args...);
 
-#if defined(PLATFORM_WINDOWS)
+#if defined(FLORAL_PLATFORM_WINDOWS)
 		record.pm_TimeStamp = __rdtsc();
 #else
 #endif
