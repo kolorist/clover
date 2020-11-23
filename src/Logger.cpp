@@ -1,5 +1,7 @@
 #include "clover/Logger.h"
 
+#include "clover/BufferOutputSink.h"
+#include "clover/RedirectOutputSink.h"
 #if defined(FLORAL_PLATFORM_WINDOWS)
 #	include "clover/VSOutputSink.h"
 #	include "clover/ConsoleOutputSink.h"
@@ -11,6 +13,8 @@ namespace clover {
 
 void Initialize(const_cstr name, LogLevel logLevel)
 {
+	InitializeBufferOutput(name, logLevel);
+	InitializeRedirectOutput(name, logLevel);
 #if defined(FLORAL_PLATFORM_WINDOWS)
 	InitializeVSOutput(name, logLevel);
 	InitializeConsoleOutput(name, logLevel);
@@ -26,6 +30,8 @@ void LogPrintln(LogLevel i_logLevel, const_cstr i_str)
 
 void LogPrintStr(LogLevel logLevel, const_cstr str)
 {
+	BufferOutputSinkDrainer::DrainLog(logLevel, str);
+	RedirectOutputSinkDrainer::DrainLog(logLevel, str);
 #if defined(FLORAL_PLATFORM_WINDOWS)
 	VSOutputSinkDrainer::DrainLog(logLevel, str);
 	ConsoleOutputSinkDrainer::DrainLog(logLevel, str);
