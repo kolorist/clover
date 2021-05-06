@@ -1,4 +1,4 @@
-#include "clover/RedirectOutputSink.h"
+#include "clover/redirect_output_sink.h"
 
 #include <Windows.h>
 #include <stdio.h>

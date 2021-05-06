@@ -31,8 +31,8 @@ if (${TARGET_PLATFORM} STREQUAL "arm64-v8a" OR ${TARGET_PLATFORM} STREQUAL "arm-
 	# nothing, because we use unity build
 else ()
 	list (REMOVE_ITEM file_list
-		"${PROJECT_SOURCE_DIR}/include/clover/ADBOutputSink.h"
-		"${PROJECT_SOURCE_DIR}/src/ADBOutputSink.cpp")
+		"${PROJECT_SOURCE_DIR}/include/clover/adb_output_sink.h"
+		"${PROJECT_SOURCE_DIR}/src/adb_output_sink.cpp")
 endif ()
 
 # 5. specify target
@@ -57,4 +57,4 @@ if (${USE_MSVC_PROJECT})
 		string(REPLACE "/" "\\" _group_path "${_source_path_rel}")
 		source_group("${_group_path}" FILES "${_source}")
 	endforeach()
-endif (${USE_MSVC_PROJECT})
+endif (${USE_MSVC_PROJECT})

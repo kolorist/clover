@@ -1,4 +1,4 @@
-#include "clover/VSOutputSink.h"
+#include "clover/vs_output_sink.h"
 
 #include <Windows.h>
 #include <stdio.h>

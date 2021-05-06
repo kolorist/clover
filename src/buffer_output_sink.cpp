@@ -1,4 +1,6 @@
-#include "clover/BufferOutputSink.h"
+#include "clover/buffer_output_sink.h"
+
+#include <stdio.h>
 
 namespace clover
 {

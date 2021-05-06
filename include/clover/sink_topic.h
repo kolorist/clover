@@ -5,9 +5,9 @@
 #include "commons.h"
 
 #if defined(FLORAL_PLATFORM_WINDOWS)
-#	include "VSOutputSink.h"
+#	include "vs_output_sink.h"
 #else
-#	include "ADBOutputSink.h"
+#	include "adb_output_sink.h"
 #endif
 
 namespace clover {

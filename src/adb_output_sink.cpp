@@ -1,4 +1,4 @@
-#include "clover/ADBOutputSink.h"
+#include "clover/adb_output_sink.h"
 
 #include <android/log.h>
 

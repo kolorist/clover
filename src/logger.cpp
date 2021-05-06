@@ -1,12 +1,12 @@
 #include "clover/Logger.h"
 
-#include "clover/BufferOutputSink.h"
-#include "clover/RedirectOutputSink.h"
+#include "clover/buffer_output_sink.h"
+#include "clover/redirect_output_sink.h"
 #if defined(FLORAL_PLATFORM_WINDOWS)
-#	include "clover/VSOutputSink.h"
-#	include "clover/ConsoleOutputSink.h"
+#	include "clover/vs_output_sink.h"
+#	include "clover/console_output_sink.h"
 #else
-#	include "clover/ADBOutputSink.h"
+#	include "clover/adb_output_sink.h"
 #endif
 
 namespace clover {

@@ -1,4 +1,4 @@
-#include "clover/ConsoleOutputSink.h"
+#include "clover/console_output_sink.h"
 
 #include <stdio.h>
 
