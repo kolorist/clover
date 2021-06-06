@@ -1,11 +1,11 @@
 #include "src/commons.cpp"
-#include "src/Logger.cpp"
-#include "src/BufferOutputSink.cpp"
-#include "src/RedirectOutputSink.cpp"
+#include "src/logger.cpp"
+#include "src/buffer_output_sink.cpp"
+#include "src/redirect_output_sink.cpp"
 #if defined(FLORAL_PLATFORM_WINDOWS)
-#	include "src/VSOutputSink.cpp"
-#	include "src/ConsoleOutputSink.cpp"
-#	include "src/Tracer.cpp"
+#	include "src/vs_output_sink.cpp"
+#	include "src/console_output_sink.cpp"
+#	include "src/tracer.cpp"
 #else
-#	include "src/ADBOutputSink.cpp"
+#	include "src/abd_output_sink.cpp"
 #endif

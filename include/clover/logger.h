@@ -17,7 +17,7 @@ namespace clover {
 
 }
 
-#include "Logger.hpp"
+#include "logger.hpp"
 
 #define CLOVER_VERBOSE(...)						clover::LogPrintln(clover::LogLevel::Verbose, __VA_ARGS__)
 #define CLOVER_DEBUG(...)						clover::LogPrintln(clover::LogLevel::Debug, __VA_ARGS__)
